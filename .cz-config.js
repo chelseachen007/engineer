@@ -15,12 +15,12 @@ module.exports = {
     { value: 'WIP', name: 'WIP:     正在进行工作' }
   ],
 
-  scopes: [
-    { name: 'accounts' },
-    { name: 'admin' },
-    { name: 'exampleScope' },
-    { name: 'changeMe' }
-  ],
+  // scopes: [
+  //   { name: 'accounts' },
+  //   { name: 'admin' },
+  //   { name: 'exampleScope' },
+  //   { name: 'changeMe' }
+  // ],
 
   // it needs to match the value for field type. Eg.: 'fix'
   /*
