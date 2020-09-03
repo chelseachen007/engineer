@@ -1,0 +1,19 @@
+{
+  "name": "engineer",
+  "version": "1.0.0",
+  "description": "vue3项目模板",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chelseachen007/engineer.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chelseachen007/engineer/issues"
+  },
+  "homepage": "https://github.com/chelseachen007/engineer#readme"
+}
