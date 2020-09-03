@@ -15,5 +15,13 @@
   "bugs": {
     "url": "https://github.com/chelseachen007/engineer/issues"
   },
-  "homepage": "https://github.com/chelseachen007/engineer#readme"
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "homepage": "https://github.com/chelseachen007/engineer#readme",
+  "devDependencies": {
+    "cz-conventional-changelog": "^3.3.0"
+  }
 }
