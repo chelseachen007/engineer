@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "prettier": "prettier src test --write",
-    "lint": "eslint src --max-warnings 0"
+    "lint": "eslint --max-warnings 0"
   },
   "repository": {
     "type": "git",
