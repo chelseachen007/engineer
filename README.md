@@ -2,7 +2,6 @@
 
 一个工程化模板
 
-测试
 ## 工作流
 
 多人协作采用[git -flow工作流](https://www.git-tower.com/learn/git/ebook/cn/command-line/advanced-topics/git-flow)
