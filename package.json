@@ -58,6 +58,7 @@
     "webpack-merge": "^5.1.4"
   },
   "dependencies": {
-    "cz-customizable": "^6.3.0"
+    "cz-customizable": "^6.3.0",
+    "glob": "^7.1.6"
   }
 }

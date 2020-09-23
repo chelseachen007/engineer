@@ -3,48 +3,41 @@ const fs = require('fs')
 const HTMLWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const {
-  html,
-  ignorePages,
   project,
   dev: { alias, include, exclude },
   build,
 } = require('./config.js')
-// 获取html文件名，生成多页面入口
-const getPagesEnter = path => {
-  const dirArr = fs.readdirSync(path)
-  const filesArr = dirArr
-    .filter(e => e.indexOf('html') >= 0)
-    .map(e => e.replace('.html', ''))
-  return filesArr
+const glob = require('glob')
+
+const setMpa = () => {
+  glob
+  let entry = {}, HTMLPlugins = []
+  //生成entry
+  const entryFiles = glob.sync(path.join(__dirname, "../views/*/index.js"));
+
+  entryFiles.map(item => {
+    const entryFile = item
+    const pageName = entryFile.match(/views\/(.*)\/index\.js/)[1]
+    entry[pageName] = entryFile
+
+    HTMLPlugins.push(
+      new HTMLWebpackPlugin({
+        template: path.join(__dirname, `../views/${pageName}/index.html`),
+        filename: `${pageName}.html`,
+        chunks: [pageName, "detail"],
+      }))
+  })
+  return {
+    entry, HTMLPlugins
+  }
 }
-const HTMLArr = getPagesEnter(html)
-const HTMLPlugins = [] // 保存HTMLWebpackPlugin实例
-const Entries = {} // 保存入口列表
-
-// 生成HTMLWebpackPlugin实例和入口列表
-HTMLArr.forEach(page => {
-  const htmlConfig = {
-    filename: `${page}.html`,
-    template: path.join(html, `./${page}.html`), // 模板文件
-  }
-  const hasIgnorePages = ignorePages.findIndex(val => val === page)
-  if (hasIgnorePages === -1) {
-    // 有入口js文件的html，添加本页的入口js，与公共js，并将入口js写入Entries中
-    htmlConfig.chunks = [page, 'vendors']
-    Entries[page] = `./src/${page}.js`
-  } else {
-    // 没有入口js文件，chunk为空
-    htmlConfig.chunks = []
-  }
-  const htmlPlugin = new HTMLWebpackPlugin(htmlConfig)
-  HTMLPlugins.push(htmlPlugin)
-})
-
+const { entry, HTMLPlugins } = setMpa()
 const baseConfig = {
   context: project, // 入口、插件路径会基于context查找
-  entry: {
-    ...Entries,
-  },
+  entry,
+  // entry: {
+  //   ...Entries,
+  // },
   output: {
     path: build, // 打包路径
   },
