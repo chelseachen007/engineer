@@ -5,3 +5,10 @@ a = 2;
 export default {
   a,
 };
+
+
+function HelloWorld ({ 
+  greeting = "hello", greeted = '"World"', silent = false, onMouseOver }) {
+  let noTrailingComma = [a, b, c]；
+};
+         asddddasda
