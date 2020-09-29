@@ -8,6 +8,7 @@ export default {
 
 function HelloWorld() {
     console.log('Hello world')
+    console.log('你好啊')
 }
 
 HelloWorld()
