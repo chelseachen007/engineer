@@ -1,14 +1,13 @@
-let a = "1";
-a = 2;
+let a = '1'
+a = 2
 
 // 中间这么多空行
 export default {
-  a,
-};
+    a,
+}
 
+function HelloWorld() {
+    console.log('Hello world')
+}
 
-function HelloWorld ({ 
-  greeting = "hello", greeted = '"World"', silent = false, onMouseOver }) {
-  let noTrailingComma = [a, b, c]；
-};
-         asddddasda
+HelloWorld()
