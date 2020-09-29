@@ -1,7 +1,11 @@
 const path = require('path')
 const fs = require('fs')
 const HTMLWebpackPlugin = require('html-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+const AddAssetHtmlWebpackPlugin = require('add-asset-html-webpack-plugin');
+const webpack = require('webpack')
+var HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 const {
   project,
   dev: { alias, include, exclude },
@@ -10,7 +14,6 @@ const {
 const glob = require('glob')
 
 const setMpa = () => {
-  glob
   let entry = {}, HTMLPlugins = []
   //生成entry
   const entryFiles = glob.sync(path.join(__dirname, "../views/*/index.js"));
@@ -31,7 +34,28 @@ const setMpa = () => {
     entry, HTMLPlugins
   }
 }
+
 const { entry, HTMLPlugins } = setMpa()
+let plugins = [
+  ...HTMLPlugins,
+  new HardSourceWebpackPlugin(),
+  new CopyWebpackPlugin([
+    { from: 'static', to: 'static' },
+  ]),
+]
+const files = fs.readdirSync(path.resolve(__dirname, '../dll'));
+files.forEach(file => {
+  if (/.*\.dll.js/.test(file)) {
+    plugins.push(new AddAssetHtmlWebpackPlugin({
+      filepath: path.resolve(__dirname, '../dll', file)
+    }))
+  }
+  if (/.*\.manifest.json/.test(file)) {
+    plugins.push(new webpack.DllReferencePlugin({
+      manifest: path.resolve(__dirname, '../dll', file)
+    }))
+  }
+})
 const baseConfig = {
   context: project, // 入口、插件路径会基于context查找
   entry,
@@ -49,13 +73,13 @@ const baseConfig = {
     rules: [
       {
         test: /\.(woff|woff2|eot|ttf|otf)(\?.*)?$/,
-        use: {
+        use: [{
           loader: 'url-loader',
           options: {
             limit: 8192,
             name: 'font/[name]-[hash:8].[ext]',
           },
-        },
+        }],
         include,
         exclude,
       },
@@ -90,11 +114,14 @@ const baseConfig = {
   },
   externals: {
   },
-  plugins: [
-    ...HTMLPlugins,
-    new CopyWebpackPlugin([
-      { from: 'static', to: 'static' },
-    ]),
-  ],
+  optimization: {
+    minimize: true,
+    minimizer: [
+      new TerserPlugin({
+        parallel: 4,
+      }),
+    ],
+  },
+  plugins
 }
 module.exports = baseConfig

@@ -6,8 +6,10 @@ const uglifyJSPlugin = require('uglifyjs-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const compressionPlugin = require('compression-webpack-plugin')
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
-  .BundleAnalyzerPlugin
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+
+const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
+const smp = new SpeedMeasurePlugin();
 const webpackBase = require('./webpack.config.base.js')
 const { project, pro } = require('./config.js')
 
@@ -28,6 +30,7 @@ const plugins = [
     deleteOriginalAssets: false,
     minRatio: 0.8,
   }),
+  new webpack.optimize.ModuleConcatenationPlugin(),
   new OptimizeCssAssetsPlugin({
     assetNameRegExp: /\.css$/g,
     cssProcessorPluginOptions: {
@@ -100,4 +103,8 @@ const webpackProd = {
   },
   plugins,
 }
-module.exports = webpackMerge(webpackBase, webpackProd)
+let webpackProdOut = webpackMerge(webpackBase, webpackProd)
+if (process.env.SMP_OPEN) {
+  webpackProdOut = smp.wrap(webpackProdOut);
+}
+module.exports = webpackProdOut
