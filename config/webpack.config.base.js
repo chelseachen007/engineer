@@ -6,6 +6,8 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const AddAssetHtmlWebpackPlugin = require('add-asset-html-webpack-plugin')
 const webpack = require('webpack')
 var HardSourceWebpackPlugin = require('hard-source-webpack-plugin')
+const vueLoaderPlugins = require('vue-loader/lib/plugin')
+
 const {
     project,
     dev: { alias, include, exclude },
@@ -46,6 +48,7 @@ const setMpa = () => {
 const { entry, HTMLPlugins } = setMpa()
 let plugins = [
     ...HTMLPlugins,
+    new vueLoaderPlugins(),
     new HardSourceWebpackPlugin(),
     new CopyWebpackPlugin([{ from: 'static', to: 'static' }]),
 ]
@@ -95,6 +98,7 @@ const baseConfig = {
                 include,
                 exclude,
             },
+
             {
                 test: /\.(png|svg|jpg|gif)(\?.*)?$/,
                 use: {
@@ -119,6 +123,12 @@ const baseConfig = {
                         },
                     },
                 ],
+                include,
+                exclude,
+            },
+            {
+                test: /\.vue$/,
+                use: ['vue-loader'],
                 include,
                 exclude,
             },
