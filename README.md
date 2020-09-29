@@ -23,6 +23,4 @@ yarn run gc
 
 ### 关于自动化部署
 
->自动化部署使用 [travis](https://travis-ci.com/)
-
 自动化部署监听 master 分支, 当 master 分支 commit 后执行构建脚本
