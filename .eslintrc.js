@@ -8,7 +8,6 @@ module.exports = {
     "eslint:recommended",
     "plugin:vue/essential",
     "prettier",
-    "standard",
   ],
   "parserOptions": {
     "ecmaVersion": 12,
@@ -18,6 +17,7 @@ module.exports = {
     "vue", 'prettier'
   ],
   "rules": {
-    'prettier/prettier': ['error'],
+    'prettier/prettier': ['error'
+    ],
   }
 };
