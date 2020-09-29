@@ -30,6 +30,13 @@
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
+  "lint-staged": {
+    "src/**/*.{jsx,txs,ts,js,json,css,md}": [
+      "prettier --write",
+      "eslint --fix",
+      "git add"
+    ]
+  },
   "homepage": "https://github.com/chelseachen007/engineer#readme",
   "devDependencies": {
     "@babel/core": "^7.2.2",
