@@ -1,14 +1,14 @@
 <template>
-  <button >
-    <slot></slot>
-  </button>
+    <button>
+        <slot></slot>
+    </button>
 </template>
 <script>
-  export default {
+export default {
     methods: {
-      handleClick (event) {
-        this.$emit('on-click', event);
-      }
-    }
-  }
+        handleClick(event) {
+            this.$emit('on-click', event)
+        },
+    },
+}
 </script>
