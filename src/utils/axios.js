@@ -2,7 +2,7 @@ import axios from 'axios'
 // const ipaddress = modeUrlObj[process.env.NODE_ENV]
 const service = axios.create({
     // baseURL: ipaddress.baseURL, // api的base_url
-    timeout: 10000, // 请求超时时间
+    timeout: process.env.TIME_OUT, // 请求超时时间
 })
 const HTTP_CODE_MAP = {
     400: '请求错误',
