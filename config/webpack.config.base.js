@@ -1,4 +1,5 @@
 const path = require('path')
+const resolve = dir => path.join(__dirname, '..', dir) // 获取文件夹
 const fs = require('fs')
 const HTMLWebpackPlugin = require('html-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
@@ -124,7 +125,12 @@ const baseConfig = {
                     },
                 ],
                 include,
-                exclude,
+                exclude: [resolve('node_modules'), resolve('src/assets/icon')],
+            },
+            {
+                test: /\.svg$/,
+                use: ['svg-sprite-loader'],
+                include: [resolve('src/assets/icon')],
             },
             {
                 test: /\.vue$/,
